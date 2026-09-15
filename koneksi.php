@@ -1,17 +1,20 @@
 <?php
-// Mengambil environment variable dari Railway
 $host = getenv('MYSQLHOST');
 $user = getenv('MYSQLUSER');
 $pass = getenv('MYSQLPASSWORD');
 $db   = getenv('MYSQLDATABASE');
 $port = getenv('MYSQLPORT') ?: "3306";
 
-// Jika dijalankan di lokal (XAMPP), gunakan fallback
 if (!$host) {
-    $host = "localhost";
+    $host = "127.0.0.1";
     $user = "root";
     $pass = "";
     $db   = "dbl_rental";
+}
+
+// Gunakan 127.0.0.1 jika host bernilai localhost agar tidak error socket
+if ($host === 'localhost') {
+    $host = '127.0.0.1';
 }
 
 $koneksi = mysqli_connect($host, $user, $pass, $db, (int)$port);
