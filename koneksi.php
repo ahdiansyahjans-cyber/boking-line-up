@@ -2,19 +2,15 @@
 $host = getenv('MYSQLHOST');
 $user = getenv('MYSQLUSER');
 $pass = getenv('MYSQLPASSWORD');
-$db   = getenv('MYSQLDATABASE');
+$db   = getenv('MYSQLDATABASE') ?: "railway"; // Fallback ke 'railway' jika env kosong
 $port = getenv('MYSQLPORT') ?: "3306";
 
+// Fallback jika dijalankan di lokal (XAMPP)
 if (!$host) {
     $host = "127.0.0.1";
     $user = "root";
     $pass = "";
     $db   = "dbl_rental";
-}
-
-// Gunakan 127.0.0.1 jika host bernilai localhost agar tidak error socket
-if ($host === 'localhost') {
-    $host = '127.0.0.1';
 }
 
 $koneksi = mysqli_connect($host, $user, $pass, $db, (int)$port);
